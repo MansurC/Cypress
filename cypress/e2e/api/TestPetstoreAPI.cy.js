@@ -15,19 +15,33 @@ describe('Petstore API Test GET method', () => {
     it('should have a response with status code 200', () => {
         cy.get('@getPetStatus').then((inter) => {
         expect(inter.response.statusCode).to.eq(200)});
-    });
-
-    it('should have a response with status "available"', () => {
-        cy.get('@getPetStatus').its('response.body.status').should('eq', "available");
-    });
+        });
 
     it('should have a response with a correct id', () => {
-         cy.get('@getPetStatus').its('response.body.id').should('eq', 99);
+             cy.get('@getPetStatus').its('response.body.id').should('eq', 99);
 
-    });
+        });
 
     it('should have a response with a correct name', () => {
-         cy.get('@getPetStatus').its('response.body.name').should('eq', 'ThisDog');
+             cy.get('@getPetStatus').its('response.body.name').should('eq', 'ThisDog');
 
-    });
+        });
+
+    it('should have a response with category including "id" and "name"', () => {
+      cy.get('@getPetStatus').its('response.body.category').should('deep.include', {id: 1, name: 'FearDogs'});
+        });
+
+    it('should have a response with photoUrls as string', () => {
+      cy.get('@getPetStatus').its('response.body.photoUrls').should('include', 'string')
+        });
+
+    it('should have a response including tags with "id" and "name"', () => {
+      cy.get('@getPetStatus').its('response.body.tags').should('deep.include', {id: 0, name: 'string'});
+        });
+
+    it('should have a response with status "available"', () => {
+      cy.get('@getPetStatus').its('response.body.status').should('eq', "available");
+        });
+
+
 });
